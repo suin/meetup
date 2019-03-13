@@ -1,0 +1,117 @@
+{
+    "name": "suin/php",
+    "type": "library",
+    "description": "Monorepo of Suin's PHP works.",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "email": "suinyeze@gmail.com",
+            "homepage": "https://github.com/suin",
+            "name": "suin",
+            "role": "Developer"
+        },
+        {
+            "email": "suinyeze@gmail.com",
+            "homepage": "https://github.com/suin",
+            "name": "suin",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.1 <7.4.0",
+        "fideloper/proxy": "^4.0",
+        "laravel/framework": "5.8.*",
+        "laravel/tinker": "^1.0"
+    },
+    "require-dev": {
+        "beyondcode/laravel-dump-server": "^1.0",
+        "brainmaestro/composer-git-hooks": ">=2.5 <3.0.0",
+        "filp/whoops": "^2.0",
+        "friendsofphp/php-cs-fixer": ">=2.13 <3.0.0",
+        "fzaninotto/faker": "^1.4",
+        "mockery/mockery": "^1.0",
+        "nunomaduro/collision": "^3.0",
+        "phpunit/phpunit": "^7.5",
+        "roave/security-advisories": "dev-master",
+        "symplify/monorepo-builder": ">=5.0 <6.0.0"
+    },
+    "conflict": {
+        "friendsofphp/php-cs-fixer": "<2.13"
+    },
+    "replace": {
+        "laravel/laravel": "self.version",
+        "suin/meetup-domain": "self.version"
+    },
+    "autoload": {
+        "classmap": [
+            "packages/laravel/database/factories",
+            "packages/laravel/database/seeds"
+        ],
+        "psr-4": {
+            "App\\": "packages/laravel/app/",
+            "Suin\\Meetup\\Domain\\": "packages/meetup-domain/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "packages/laravel/tests/",
+            "Tests\\Integration\\Suin\\Meetup\\Domain\\": "packages/meetup-domain/tests/integration",
+            "Tests\\Unit\\Suin\\Meetup\\Domain\\": "packages/meetup-domain/tests/unit"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "git:configure": [
+            "git config core.commentchar '#'",
+            "@git:commit-template",
+            "cghooks update"
+        ],
+        "git:commit-template": "git config --add commit.template .gitmessage",
+        "artisan": "./packages/laravel/artisan",
+        "serve": "./packages/laravel/artisan serve",
+        "qa:format": "true || php-cs-fixer fix --ansi --config code-quality/.php_cs.dist",
+        "qa:format:preview": "true || php-cs-fixer fix --ansi --config code-quality/.php_cs.dist --dry-run --diff --diff-format=udiff --verbose",
+        "qa:test": "phpdbg -qrr vendor/bin/phpunit --colors=always",
+        "qa:check": [
+            "@monorepo:merge",
+            "@monorepo:validate",
+            "@qa:format:preview",
+            "@qa:test"
+        ],
+        "monorepo:fix-composer-json": "./monorepo/composer-json-fixer.php",
+        "monorepo:merge": [
+            "@monorepo:fix-composer-json",
+            "monorepo-builder merge -c monorepo/monorepo-builder.yml",
+            "composer dump-autoload"
+        ],
+        "monorepo:validate": "monorepo-builder validate -c monorepo/monorepo-builder.yml",
+        "monorepo:changelog": "git chglog > CHANGELOG.md",
+        "monorepo:split": "monorepo-builder split -c monorepo/monorepo-builder.yml",
+        "post-install-cmd": "cghooks add --ignore-lock",
+        "post-update-cmd": "@git:configure"
+    },
+    "scripts-descriptions": {
+        "git:configure": "Configures git settings.",
+        "git:commit-template": "Installs git commit template.",
+        "qa:format": "Fixes PHP coding style.",
+        "qa:format:preview": "Previews above.",
+        "qa:test": "Runs unit tests.",
+        "qa:check": "Runs code analysis and unit tests.",
+        "monorepo:fix-composer-json": "Fixes \"composer.json\" in all found packages by rules.",
+        "monorepo:merge": "Merges \"composer.json\" from all found packages to root one.",
+        "monorepo:validate": "Validates synchronized versions in \"composer.json\" in all found packages.",
+        "monorepo:changelog": "Updates CHANGELOG.md.",
+        "monorepo:split": "Splits packages and release them."
+    },
+    "extra": {
+        "hooks": {
+            "pre-commit": "composer qa:check",
+            "pre-push": "composer qa:check"
+        }
+    }
+}

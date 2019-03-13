@@ -1,0 +1,45 @@
+parameters:
+  merge_sections:
+  - license
+  - authors
+  - require
+  - require-dev
+  - conflict
+  - autoload
+  - autoload-dev
+
+  package_directories:
+  - packages
+
+  section_order:
+  - name
+  - type
+  - description
+  - keywords
+  - homepage
+  - license
+  - authors
+  - minimum-stability
+  - prefer-stable
+  - support
+  - require
+  - require-dev
+  - conflict
+  - replace
+  - provide
+  - suggest
+  - autoload
+  - autoload-dev
+  - repositories
+  - config
+  - scripts
+  - scripts-descriptions
+  - extra
+
+  data_to_append:
+    require-dev:
+      brainmaestro/composer-git-hooks: ">=2.5 <3.0.0"
+      friendsofphp/php-cs-fixer: ">=2.13 <3.0.0"
+      phpunit/phpunit: "^7.5"
+      roave/security-advisories: dev-master
+      symplify/monorepo-builder: ">=5.0 <6.0.0"

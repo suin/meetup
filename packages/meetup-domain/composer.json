@@ -1,0 +1,38 @@
+{
+    "name": "suin/meetup-domain",
+    "type": "library",
+    "description": "Domain model of meetup",
+    "keywords": [],
+    "homepage": "https://github.com/suin/php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "suin",
+            "email": "suinyeze@gmail.com",
+            "homepage": "https://github.com/suin",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "support": {
+        "issues": "https://github.com/suin/php/issues"
+    },
+    "require": {
+        "php": ">=7.1 <7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Suin\\Meetup\\Domain\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Integration\\Suin\\Meetup\\Domain\\": "tests/integration",
+            "Tests\\Unit\\Suin\\Meetup\\Domain\\": "tests/unit"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+return PhpCsFixer\Config::create()
+    ->setCacheFile(__DIR__ . '/.php_cs.cache')
+    ->setRiskyAllowed(true)
+    ->setRules(
+        Suin\PhpCsFixer\Rules::create(
+            [
+                'phpdoc_separation' => false,
+                'phpdoc_to_comment' => false,
+                'class_definition' => [
+                    'multi_line_extends_each_single_line' => true,
+                ]
+            ]
+        )
+    )
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->exclude('vendor')
+            ->in('packages')
+    );

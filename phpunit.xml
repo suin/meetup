@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         beStrictAboutCoversAnnotation="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         verbose="true"
+         colors="true">
+    <testsuite name="all">
+        <directory>packages/*/tests</directory>
+    </testsuite>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">packages/*/src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html"
+             target="reports-coverage"/>
+        <log type="coverage-clover"
+             target="reports-coverage/clover.xml"/>
+        <log type="coverage-text"
+             target="php://stdout"
+             showOnlySummary="true"/>
+    </logging>
+    <php>
+        <const name="PHPUNIT_RUNNING" value="true"/>
+    </php>
+</phpunit>

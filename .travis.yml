@@ -1,0 +1,39 @@
+language: php
+
+sudo: false
+
+notifications:
+  email:
+    on_success: never
+
+git:
+  depth: 2
+
+php:
+- '7.1'
+- '7.2'
+- nightly
+
+matrix:
+  allow_failures:
+  - php: nightly
+
+cache:
+  directories:
+  - $HOME/.composer/cache
+
+before_script:
+- travis_retry composer self-update
+- travis_retry composer global require hirak/prestissimo # Rapid composer installation
+- travis_retry composer install --no-interaction --prefer-dist
+- >
+  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter &&
+  chmod +x ./cc-test-reporter &&
+  ./cc-test-reporter before-build
+
+script:
+- composer qa:check
+
+after_script:
+- mv reports-coverage/clover.xml clover.xml
+- ./cc-test-reporter after-build --coverage-input-type clover --exit-code $TRAVIS_TEST_RESULT

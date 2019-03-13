@@ -1,0 +1,8 @@
+/vendor
+/composer.lock
+/packages/*/vendor
+/packages/*/composer.lock
+/reports-coverage
+/.php_cs.cache
+/.php_cs
+*.cache
